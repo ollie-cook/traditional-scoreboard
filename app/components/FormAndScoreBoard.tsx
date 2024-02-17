@@ -25,7 +25,7 @@ export default function FormAndScoreBoard({ fixtures }: { fixtures: Fixture[] })
     return () => {
       clearInterval(timer);
     };
-  }, []);
+  }, [fixtureState]);
 
   const refreshFixture = async () => {
     const newFixture = await refreshScore(fixtureState?.id);
