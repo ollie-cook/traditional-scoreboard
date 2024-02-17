@@ -1,5 +1,8 @@
-export async function GET() {
-  const url = 'https://api-football-v1.p.rapidapi.com/v3/fixtures?id=1035414';
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url)
+  const id = searchParams.get('id')
+
+  const url = 'https://api-football-v1.p.rapidapi.com/v3/fixtures?id=' + id;
   const options = {
     method: 'GET',
     headers: {
@@ -19,12 +22,15 @@ export async function GET() {
     console.error(error);
   }
 
+  console.log('HELLO')
+  console.log(result)
+
   const updatedFixture = {
-    id: result.fixture.id,
-    home: result.teams.home.name,
-    away: result.teams.away.name,
-    goals: [result.goals.home, result.goals.away],
-    minutes: result.fixture.status.elapsed
+    id: result?.fixture.id,
+    home: result?.teams.home.name,
+    away: result?.teams.away.name,
+    goals: [result?.goals.home, result?.goals.away],
+    minutes: result?.fixture.status.elapsed
   }
 
   return Response.json(updatedFixture);

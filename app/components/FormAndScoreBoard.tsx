@@ -17,9 +17,7 @@ export default function FormAndScoreBoard({ fixtures }: { fixtures: Fixture[] })
     const timer = setInterval(async () => {
       // Your function here
       console.log('score last refreshed at ' + new Date())
-      const newFixture = await refreshScore();
-
-      setFixtureState(newFixture)
+      refreshFixture()
     }, 60000);
     
   
@@ -28,6 +26,11 @@ export default function FormAndScoreBoard({ fixtures }: { fixtures: Fixture[] })
       clearInterval(timer);
     };
   }, []);
+
+  const refreshFixture = async () => {
+    const newFixture = await refreshScore(fixtureState?.id);
+    setFixtureState(newFixture)
+  }
 
   return (
     <div>
@@ -54,8 +57,8 @@ export default function FormAndScoreBoard({ fixtures }: { fixtures: Fixture[] })
   )
 }
 
-const refreshScore = async () => {
-  const result = await fetch('/api/refresh')
+const refreshScore = async (id: number | undefined) => {
+  const result = await fetch('/api/refresh?fixtureId='+id)
   const data = await result.json()
   console.log(data)
 
