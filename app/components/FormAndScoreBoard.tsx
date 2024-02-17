@@ -13,7 +13,6 @@ export default function FormAndScoreBoard({ fixtures }: { fixtures: Fixture[] })
     setFixtureState(selectedFixture)
   }
 
-  /*
   useEffect(() => {
     const timer = setInterval(async () => {
       console.log('score last refreshed at ' + new Date())
@@ -26,7 +25,6 @@ export default function FormAndScoreBoard({ fixtures }: { fixtures: Fixture[] })
       clearInterval(timer);
     };
   }, [fixtureState]);
-*/
 
   const refreshFixture = async () => {
     const newFixture = await refreshScore(fixtureState?.id);
