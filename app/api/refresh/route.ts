@@ -1,6 +1,6 @@
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url)
-  const id = searchParams.get('id')
+  const id = searchParams.get('fixtureId')
 
   const url = 'https://api-football-v1.p.rapidapi.com/v3/fixtures?id=' + id;
   const options = {
