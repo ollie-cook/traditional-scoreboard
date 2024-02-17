@@ -1,7 +1,9 @@
 'use client'
 
 import { type Fixture } from '@/app/utils/types'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import ScoreBoard from './ScoreBoard'
+
 
 export default function FormAndScoreBoard({ fixtures }: { fixtures: Fixture[] }) {
   const [fixtureState, setFixtureState] = useState<Fixture | undefined>(fixtures[0] || undefined)
@@ -10,6 +12,22 @@ export default function FormAndScoreBoard({ fixtures }: { fixtures: Fixture[] })
     const selectedFixture = fixtures.find((fixture) => fixture.id === Number(event.target.value))
     setFixtureState(selectedFixture)
   }
+
+  useEffect(() => {
+    const timer = setInterval(async () => {
+      // Your function here
+      console.log('score last refreshed at ' + new Date())
+      const newFixture = await refreshScore();
+
+      setFixtureState(newFixture)
+    }, 60000);
+    
+  
+    // Clear interval on component unmount
+    return () => {
+      clearInterval(timer);
+    };
+  }, []);
 
   return (
     <div>
@@ -29,13 +47,17 @@ export default function FormAndScoreBoard({ fixtures }: { fixtures: Fixture[] })
           </select>
         </form>
       </div>
-      <div className="h-screen bg-black">
-        <p className="text-white">{fixtureState?.home}</p>
-        <p className="text-white">{fixtureState?.away}</p>
-        <p className="text-white">{fixtureState?.goals[0]}</p>
-        <p className="text-white">{fixtureState?.goals[1]}</p>
-        <p className="text-white">{fixtureState?.minutes}</p>
+      <div className="h-screen w-full flex justify-center items-center bg-black">
+        <ScoreBoard fixture={fixtureState} />
       </div>
     </div>
   )
+}
+
+const refreshScore = async () => {
+  const result = await fetch('/api/refresh')
+  const data = await result.json()
+  console.log(data)
+
+  return data
 }
