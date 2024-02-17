@@ -3,7 +3,7 @@ export async function GET() {
   const options = {
     method: 'GET',
     headers: {
-      'X-RapidAPI-Key': 'c7a84eecc8msh642d7cec68f4b68p1ba4dajsn57c81996f610',
+      'X-RapidAPI-Key': process.env.FOOTBALL_API_KEY || "",
       'X-RapidAPI-Host': 'api-football-v1.p.rapidapi.com'
     },
     next: {revalidate: 0}

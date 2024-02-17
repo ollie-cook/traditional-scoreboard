@@ -12,13 +12,13 @@ export default async function Home() {
 }
 
 const getTodaysFixtures = async () => {
-  const apiKey = 'c7a84eecc8msh642d7cec68f4b68p1ba4dajsn57c81996f610';
+  const apiKey = process.env.FOOTBALL_API_KEY;
 
   const premierLeagueFixtures = 'https://api-football-v1.p.rapidapi.com/v3/fixtures?date=2024-02-17&league=39&season=2023';
   const options = {
     method: 'GET',
     headers: {
-        'X-RapidAPI-Key': apiKey,
+        'X-RapidAPI-Key': apiKey || "",
         'X-RapidAPI-Host': 'api-football-v1.p.rapidapi.com'
     },
     next: {revalidate: 0}
