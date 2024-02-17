@@ -13,9 +13,9 @@ export default function FormAndScoreBoard({ fixtures }: { fixtures: Fixture[] })
     setFixtureState(selectedFixture)
   }
 
+  /*
   useEffect(() => {
     const timer = setInterval(async () => {
-      // Your function here
       console.log('score last refreshed at ' + new Date())
       refreshFixture()
     }, 60000);
@@ -26,6 +26,7 @@ export default function FormAndScoreBoard({ fixtures }: { fixtures: Fixture[] })
       clearInterval(timer);
     };
   }, [fixtureState]);
+*/
 
   const refreshFixture = async () => {
     const newFixture = await refreshScore(fixtureState?.id);
@@ -34,7 +35,7 @@ export default function FormAndScoreBoard({ fixtures }: { fixtures: Fixture[] })
 
   return (
     <div>
-      <div className="w-full flex justify-center py-4">
+      <div className="w-full flex flex-col justify-center items-center py-4">
         <form className="flex flex-col items-start">
           <label className="text-sm">Select fixture</label>
           <select 
@@ -49,6 +50,7 @@ export default function FormAndScoreBoard({ fixtures }: { fixtures: Fixture[] })
             ))}
           </select>
         </form>
+        <p className="mt-4">Scroll down to make score board full screen</p>
       </div>
       <div className="h-screen w-full flex justify-center items-center bg-black">
         <ScoreBoard fixture={fixtureState} />
